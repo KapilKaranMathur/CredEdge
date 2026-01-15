@@ -15,26 +15,26 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
-    e.preventDefault()
-    let profileImageUrl = ""
-    if(!fullName){
+    e.preventDefault();
+    let profileImageUrl = "";
+    if (!fullName) {
       setError("Please enter your full name.");
-      return
+      return;
     }
 
-    if(!validateEmail(email)){
+    if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
-      return
+      return;
     }
-    if(!password){
+    if (!password) {
       setError("Please enter your password.");
-      return
+      return;
     }
 
-    setError("")
+    setError("");
   };
 
-  kk
+  kk;
   return (
     <AuthLayout>
       <div className="lg:w-full h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">

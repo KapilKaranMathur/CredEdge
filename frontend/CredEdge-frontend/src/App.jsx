@@ -5,11 +5,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Login from "./pages/Auth/Login"
-import SignUp from "./pages/Auth/SignUp"
-import Home from "./pages/Dashboard/Home"
-import Income from "./pages/Dashboard/Income"
-import Expense from "./pages/Dashboard/Expense"
+import Login from "./pages/Auth/Login";
+import SignUp from "./pages/Auth/SignUp";
+import Home from "./pages/Dashboard/Home";
+import Income from "./pages/Dashboard/Income";
+import Expense from "./pages/Dashboard/Expense";
 
 const App = () => {
   return (
@@ -22,7 +22,6 @@ const App = () => {
           <Route path="/dashboard" exact element={<Home />} />
           <Route path="/income" exact element={<Income />} />
           <Route path="/expense" exact element={<Expense />} />
-
         </Routes>
       </Router>
     </div>
@@ -31,14 +30,14 @@ const App = () => {
 
 export default App;
 
-const Root = () =>{
+const Root = () => {
   // check if token is in local storage
   const isAuthenticated = !!localStorage.getItem("token");
 
   // if authenticated then to dashboard else to login
-  return isAuthenticated ?(
+  return isAuthenticated ? (
     <Navigate to="/dashboard" />
-  ):(
+  ) : (
     <Navigate to="/login" />
   );
-}
+};

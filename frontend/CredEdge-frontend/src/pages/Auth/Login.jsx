@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/inputs/input";
 import { validateEmail } from "../../utils/helper";
 
@@ -13,16 +13,16 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if(!validateEmail(email)){
+    if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
-      return
+      return;
     }
-    if(!password){
+    if (!password) {
       setError("Please enter your password.");
-      return
+      return;
     }
 
-    setError("")
+    setError("");
   };
   return (
     <AuthLayout>
@@ -61,7 +61,6 @@ const Login = () => {
               SignUp
             </Link>
           </p>
-          
         </form>
       </div>
     </AuthLayout>
