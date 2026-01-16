@@ -1,19 +1,20 @@
 const xlsx = require("xlsx");
 const Income = require("../models/Income");
+const Expense = require("../models/Expense");
 
 exports.addIncome = async (req, res) => {
-  const userId = req.user.deleteIncome;
+  const userId = req.user.id;
   try {
     const { icon, source, amount, date } = req.body;
-    if (!source || !amount) {
+    if (!source || !amount || !date) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    const newIncome = await Income({
+    const newIncome = new Income({
       userId,
       icon,
       source,
       amount,
-      date: new Date(data),
+      date: new Date(date),
     });
     await newIncome.save();
     res.status(200).json(newIncome);
@@ -33,7 +34,6 @@ exports.getAllIncome = async (req, res) => {
 };
 
 exports.deleteIncome = async (req, res) => {
-  const userId = req.user.id;
   try {
     await Income.findByIdAndDelete(req.params.id);
     res.json({ message: "Income deleted successfully" });
