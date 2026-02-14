@@ -11,33 +11,44 @@ import Home from "./pages/Dashboard/Home";
 import Income from "./pages/Dashboard/Income";
 import Expense from "./pages/Dashboard/Expense";
 import UserProvider from "./context/UserContext";
+import ThemeProvider from "./context/ThemeContext";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
-    <UserProvider>
-      <div>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Root />} />
-            <Route path="/login" exact element={<Login />} />
-            <Route path="/signUp" exact element={<SignUp />} />
-            <Route path="/dashboard" exact element={<Home />} />
-            <Route path="/income" exact element={<Income />} />
-            <Route path="/expense" exact element={<Expense />} />
-          </Routes>
-        </Router>
-      </div>
-    </UserProvider>
+    <ThemeProvider>
+      <UserProvider>
+        <div>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Root />} />
+              <Route path="/login" exact element={<Login />} />
+              <Route path="/signup" exact element={<SignUp />} />
+              <Route path="/dashboard" exact element={<Home />} />
+              <Route path="/income" exact element={<Income />} />
+              <Route path="/expense" exact element={<Expense />} />
+            </Routes>
+          </Router>
+        </div>
+
+        <Toaster
+          toastOptions={{
+            className: "",
+            style: {
+              fontSize: "13px",
+            },
+          }}
+        />
+      </UserProvider>
+    </ThemeProvider>
   );
 };
 
 export default App;
 
 const Root = () => {
-  // check if token is in local storage
   const isAuthenticated = !!localStorage.getItem("token");
 
-  // if authenticated then to dashboard else to login
   return isAuthenticated ? (
     <Navigate to="/dashboard" />
   ) : (

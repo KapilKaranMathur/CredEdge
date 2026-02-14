@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
 
 exports.registerUser = async (req, res) => {
@@ -12,28 +12,59 @@ exports.registerUser = async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res
+      .status(400)
+      .json({ message: "Please enter a valid email address" });
+  }
+
+  if (password.length < 8) {
+    return res
+      .status(400)
+      .json({ message: "Password must be at least 8 characters" });
+  }
+
+  const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+  if (!strongPasswordRegex.test(password)) {
+    return res.status(400).json({
+      message:
+        "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+    });
+  }
+
+  const sanitizedName = fullName.trim().replace(/<[^>]*>/g, "");
+  if (!sanitizedName || sanitizedName.length < 2) {
+    return res
+      .status(400)
+      .json({ message: "Please enter a valid name (at least 2 characters)" });
+  }
+
   try {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      email: email.toLowerCase().trim(),
+    });
     if (existingUser) {
-      return res.status(400).json({ message: "Email already in use" });
+      return res
+        .status(400)
+        .json({ message: "An account with this email already exists" });
     }
 
-    const user = await User.create({
-      fullName,
-      email,
+    await User.create({
+      fullName: sanitizedName,
+      email: email.toLowerCase().trim(),
       password,
       profileImageUrl,
     });
 
     res.status(201).json({
-      id: user.id,
-      user,
-      token: generateToken(user.id),
+      message: "Account created successfully. Please log in.",
     });
   } catch (err) {
+    console.error("Register Error:", err);
     res
       .status(500)
-      .json({ message: "Error registering user", error: err.message });
+      .json({ message: "Something went wrong. Please try again." });
   }
 };
 
@@ -43,20 +74,35 @@ exports.loginUser = async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
   try {
-    const user = await User.findOne({ email });
-    if (!user || !(await user.comparePassword(password))) {
-      return res.status(400).json({ message: "Invalid credentials" });
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (!user) {
+      return res
+        .status(404)
+        .json({
+          message: "No account found with this email. Please sign up first.",
+        });
     }
+
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res
+        .status(401)
+        .json({ message: "Incorrect password. Please try again." });
+    }
+
+    const userData = user.toObject();
+    delete userData.password;
 
     res.status(200).json({
       id: user._id,
-      user,
+      user: userData,
       token: generateToken(user._id),
     });
   } catch (err) {
+    console.error("Login Error:", err);
     res
       .status(500)
-      .json({ message: "Error registering user", error: err.message });
+      .json({ message: "Something went wrong. Please try again." });
   }
 };
 
@@ -70,6 +116,6 @@ exports.getUserInfo = async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ message: "Error registering user", error: err.message });
+      .json({ message: "Something went wrong. Please try again." });
   }
 };

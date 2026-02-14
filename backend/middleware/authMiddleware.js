@@ -8,9 +8,20 @@ exports.protect = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await User.findById(decoded.id).select("-password");
+    const user = await User.findById(decoded.id).select("-password");
+
+    if (!user) {
+      return res.status(401).json({ message: "User no longer exists" });
+    }
+
+    req.user = user;
     next();
   } catch (err) {
-    res.status(401).json({ message: "Not authorized, token failed" });
+    if (err.name === "TokenExpiredError") {
+      return res
+        .status(401)
+        .json({ message: "Session expired. Please log in again." });
+    }
+    res.status(401).json({ message: "Not authorized, invalid token" });
   }
 };

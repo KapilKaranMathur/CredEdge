@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/inputs/input";
@@ -6,8 +6,8 @@ import { validateEmail } from "../../utils/helper";
 import ProfilePhotoSelector from "../../components/inputs/ProfilePhotoSelector";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { UserContext } from "../../context/UserContext";
 import uploadImage from "../../utils/uploadImage";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -15,8 +15,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-
-  const { updateUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -36,8 +35,19 @@ const SignUp = () => {
       setError("Please enter your password.");
       return;
     }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+      setError(
+        "Password must contain at least one uppercase letter, one lowercase letter, and one number.",
+      );
+      return;
+    }
 
     setError("");
+    setLoading(true);
 
     try {
       if (profilePic) {
@@ -45,25 +55,23 @@ const SignUp = () => {
         profileImageUrl = imgUploadRes.imageUrl || "";
       }
 
-      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+      await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
         fullName,
         email,
         password,
         profileImageUrl,
       });
 
-      const { token, user } = response.data;
-      if (token) {
-        localStorage.setItem("token", token);
-        updateUser(user);
-        navigate("/dashboard");
-      }
+      toast.success("Account created! Please log in.");
+      navigate("/login");
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
       } else {
         setError("Something went wrong. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,7 +108,7 @@ const SignUp = () => {
                 value={password}
                 onChange={({ target }) => setPassword(target.value)}
                 label="Password"
-                placeholder="Min 8 Characters"
+                placeholder="Min 8 chars, upper, lower, number"
                 type="password"
               />
             </div>
@@ -108,8 +116,8 @@ const SignUp = () => {
 
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
-          <button type="submit" className="btn-primary">
-            SIGN UP
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? "Creating Account..." : "SIGN UP"}
           </button>
 
           <p className="text-[13px] text-slate-800 mt-3">
