@@ -8,7 +8,7 @@ const Navbar = ({ activeMenu }) => {
   const { darkMode, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <div className="flex items-center gap-5 bg-white dark:bg-black border-b border-gray-200/50 dark:border-[#2a2a2a] backdrop-blur-[2px] py-4 px-7 sticky top-0 z-30">
+    <div className="flex items-center gap-5 bg-white/95 dark:bg-[#111] border-b border-gray-200/50 dark:border-[#2a2a2a] backdrop-blur-md py-4 px-7 sticky top-0 z-30">
       <button
         className="block lg:hidden text-black dark:text-white"
         onClick={() => {

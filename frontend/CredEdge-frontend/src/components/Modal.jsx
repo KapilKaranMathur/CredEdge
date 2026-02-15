@@ -3,9 +3,9 @@ import React from "react";
 const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed top-0 left-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto overflow-x-hidden bg-black/40">
+    <div className="fixed top-0 left-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto overflow-x-hidden bg-black/50 backdrop-blur-sm">
       <div className="relative p-4 w-full max-w-2xl max-h-full">
-        <div className="relative bg-white dark:bg-[#1e1e1e] rounded-lg shadow-lg">
+        <div className="relative bg-white dark:bg-[#1a1a1a] rounded-lg shadow-2xl dark:shadow-black/50 border border-transparent dark:border-[#2a2a2a]">
           <div className="flex items-center justify-between p-4 md:p-5 border-b border-gray-200 dark:border-[#2a2a2a]">
             <h3 className="text-lg font-medium text-gray-900 dark:text-white">
               {title}

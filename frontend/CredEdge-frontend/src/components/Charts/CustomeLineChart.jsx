@@ -9,26 +9,18 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const CustomeLineChart = ({ data, color = "emerald" }) => {
+const CustomeLineChart = ({ data, color = "sage" }) => {
   const colorMap = {
-    emerald: {
-      stroke: "#10b981",
-      gradStart: "#10b981",
-      gradMid: "#34d399",
-      gradEnd: "#6ee7b7",
-      dot: "#10b981",
-      label: "text-emerald-600 dark:text-emerald-400",
-    },
     sage: {
-      stroke: "#8fc0a9",
-      gradStart: "#8fc0a9",
-      gradMid: "#a8d5ba",
-      gradEnd: "#c6eadd",
-      dot: "#8fc0a9",
-      label: "text-[#6d9e87] dark:text-[#8fc0a9]",
+      stroke: "#2F8F7B",
+      gradStart: "#2F8F7B",
+      gradMid: "#4FD1B8",
+      gradEnd: "#CCFBF1",
+      dot: "#2F8F7B",
+      label: "text-[#276E60] dark:text-[#4FD1B8]",
     },
   };
-  const c = colorMap[color] || colorMap.emerald;
+  const c = colorMap[color] || colorMap.sage;
 
   const CutomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {

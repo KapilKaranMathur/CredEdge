@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
 import CustomPieChart from "../Charts/CustomPieChart";
 
-const COLORS = ["#B6C6B4", "#6F9691", "#2A3646", "#9A9587"];
-
+const COLORS = ["#264653",
+  "#287271",
+  "#2A9D8F",
+  "#E9C46A",
+  "#EFB366",
+  "#F4A261",
+  "#EE8959",
+  "#E76F51",]
 const RecentIncomeWithChart = ({ data, totalIncome }) => {
   const [chartData, setChartData] = useState([]);
 
   const prepareChartData = () => {
-    const dataArr = data?.map((item) => ({
+    const limitedData = [...(data || [])]
+      .sort((a, b) => b.amount - a.amount)
+      .slice(0, 8);
+    const dataArr = limitedData.map((item) => ({
       name: item?.source,
       amount: item?.amount,
     }));

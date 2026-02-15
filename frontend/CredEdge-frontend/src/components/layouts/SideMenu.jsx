@@ -21,7 +21,7 @@ const SideMenu = ({ activeMenu }) => {
   };
 
   return (
-    <div className="w-64 h-[calc(100vh-61px)] bg-white dark:bg-black border-r border-gray-200/50 dark:border-[#2a2a2a] p-5 sticky top-15.25 z-20 flex flex-col overflow-hidden">
+    <div className="w-64 h-[calc(100vh-61px)] bg-white dark:bg-[#111] border-r border-gray-200/50 dark:border-[#2a2a2a] p-5 sticky top-15.25 z-20 flex flex-col overflow-hidden">
       <div className="flex flex-col items-center justify-center gap-3 mt-2 mb-5">
         {user?.profileImageUrl ? (
           <img

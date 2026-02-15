@@ -11,7 +11,14 @@ import {
 } from "recharts";
 import CustomTooltip from "./CustomTooltip";
 
-const BAR_COLORS = ["#B6C6B4", "#6F9691", "#2A3646", "#9A9587"];
+const BAR_COLORS = ["#264653",
+  "#287271",
+  "#2A9D8F",
+  "#E9C46A",
+  "#EFB366",
+  "#F4A261",
+  "#EE8959",
+  "#E76F51",];
 
 const CustomBarChart = ({ data }) => {
   const labelKey =
