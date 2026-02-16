@@ -17,11 +17,11 @@ const SideMenu = ({ activeMenu }) => {
   const handleLogout = () => {
     localStorage.clear();
     clearUser();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
-    <div className="w-64 h-[calc(100vh-61px)] bg-white dark:bg-[#111] border-r border-gray-200/50 dark:border-[#2a2a2a] p-5 sticky top-15.25 z-20 flex flex-col overflow-hidden">
+    <div className="w-64 h-[calc(100vh-61px)] bg-white dark:bg-[#0A0A0A] border-r border-gray-200/50 dark:border-[#2a2a2a] p-5 sticky top-15.25 z-20 flex flex-col overflow-hidden">
       <div className="flex flex-col items-center justify-center gap-3 mt-2 mb-5">
         {user?.profileImageUrl ? (
           <img
@@ -71,7 +71,7 @@ const SideMenu = ({ activeMenu }) => {
       </div>
       {showLogoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white dark:bg-[#1e1e1e] rounded-2xl shadow-xl p-6 w-80 mx-4 border border-gray-100 dark:border-[#2a2a2a]">
+          <div className="bg-white dark:bg-[#0C0C0C] rounded-2xl shadow-xl p-6 w-80 mx-4 border border-gray-100 dark:border-[#2a2a2a]">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               Confirm Logout
             </h3>
@@ -80,7 +80,7 @@ const SideMenu = ({ activeMenu }) => {
             </p>
             <div className="flex gap-3 justify-end">
               <button
-                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[#252525] hover:bg-gray-200 dark:hover:bg-[#2a2a2a] rounded-lg cursor-pointer"
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[#0C0C0C] hover:bg-gray-200 dark:hover:bg-[#2a2a2a] rounded-lg cursor-pointer"
                 onClick={() => setShowLogoutConfirm(false)}
               >
                 Cancel

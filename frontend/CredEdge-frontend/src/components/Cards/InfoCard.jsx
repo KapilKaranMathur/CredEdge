@@ -2,7 +2,7 @@ import React from "react";
 
 const InfoCard = ({ icon, label, value, color }) => {
   return (
-    <div className="flex gap-6 bg-white dark:bg-[#1a1a1a] p-6 rounded-2xl shadow-md shadow-gray-100 dark:shadow-none border border-gray-200/50 dark:border-[#2a2a2a]">
+    <div className="flex gap-6 bg-white dark:bg-[#0C0C0C] p-6 rounded-2xl shadow-md shadow-gray-100 dark:shadow-none border border-gray-200/50 dark:border-[#2a2a2a]">
       <div
         className={`w-14 h-14 flex items-center justify-center text-26px text-white ${color} rounded-full drop-shadow-xl`}
       >

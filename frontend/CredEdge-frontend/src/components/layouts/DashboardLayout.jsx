@@ -9,7 +9,7 @@ const DashboardLayout = ({ children, activeMenu }) => {
   const { darkMode } = useContext(ThemeContext);
   return (
     <div
-      className={`min-h-screen bg-gray-50 dark:bg-black ${darkMode ? "dark" : ""}`}
+      className={`min-h-screen bg-gray-50 dark:bg-[#0A0A0A] ${darkMode ? "dark" : ""}`}
     >
       <Navbar activeMenu={activeMenu} />
 

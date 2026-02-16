@@ -6,9 +6,9 @@ const AuthLayout = ({ children }) => {
   return (
     <div className="flex">
       <div className="w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12">
-        <h2 className="text-lg font-medium text-black">CredEdge</h2>
-        {children}
-      </div>
+          <h2 className="text-lg font-medium text-black">CredEdge</h2>
+          {children}
+        </div>
 
       <div className="hidden md:block w-[40vw] h-screen relative overflow-hidden border-l border-black">
         <img

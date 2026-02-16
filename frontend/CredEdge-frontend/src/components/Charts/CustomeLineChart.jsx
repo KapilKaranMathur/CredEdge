@@ -25,7 +25,7 @@ const CustomeLineChart = ({ data, color = "sage" }) => {
   const CutomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white/95 dark:bg-[#1e1e1e]/95 backdrop-blur-sm shadow-xl rounded-xl px-4 py-3 border border-gray-100 dark:border-[#2a2a2a]">
+        <div className="bg-white/95 dark:bg-[#0C0C0C]/95 backdrop-blur-sm shadow-xl rounded-xl px-4 py-3 border border-gray-100 dark:border-[#2a2a2a]">
           <p className={`text-xs font-semibold ${c.label} mb-1`}>
             {payload[0].payload.category}
           </p>
