@@ -8,7 +8,7 @@ const CustomTooltip = ({ active, payload }) => {
           {payload[0].name}
         </p>
         <p className="text-base font-bold text-gray-900 dark:text-white">
-          ${payload[0].value?.toLocaleString()}
+          ₹{payload[0].value?.toLocaleString()}
         </p>
       </div>
     );

@@ -283,8 +283,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-
-      <section className="py-20 px-6">
+      <section className="py-8 px-6">
         <motion.div
           className="max-w-3xl mx-auto text-center rounded-3xl px-8 py-14 md:px-14 relative overflow-hidden"
           style={{

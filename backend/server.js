@@ -16,7 +16,18 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        process.env.CLIENT_URL,
+      ].filter(Boolean);
+      
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".trycloudflare.com")) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,

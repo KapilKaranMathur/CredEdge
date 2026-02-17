@@ -32,7 +32,7 @@ const CustomeLineChart = ({ data, color = "sage" }) => {
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Amount:{" "}
             <span className="text-sm font-semibold text-gray-900 dark:text-white">
-              ${payload[0].payload.amount?.toLocaleString()}
+              ₹{payload[0].payload.amount?.toLocaleString()}
             </span>
           </p>
         </div>
