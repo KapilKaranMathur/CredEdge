@@ -9,6 +9,8 @@ const axiosInstance = axios.create({
     Accept: "application/json",
   },
 });
+
+console.log("Current API BASE_URL:", BASE_URL);
 axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("token");
