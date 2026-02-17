@@ -1,4 +1,4 @@
-import Input from "../inputs/input";
+import Input from "../inputs/Input";
 import React, { useState } from "react";
 import { LuTarget } from "react-icons/lu";
 import EmojiPickerPopup from "../EmojiPickerPopup";
