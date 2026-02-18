@@ -11,7 +11,7 @@ import Home from "./pages/Dashboard/Home";
 import Income from "./pages/Dashboard/Income";
 import Expense from "./pages/Dashboard/Expense";
 import LandingPage from "./pages/LandingPage";
-import UserProvider from "./context/UserContext";
+import UserProvider, { UserContext } from "./context/UserContext";
 import ThemeProvider from "./context/ThemeContext";
 import { Toaster } from "react-hot-toast";
 
@@ -23,11 +23,51 @@ const App = () => {
           <Router>
             <Routes>
               <Route path="/" element={<Root />} />
-              <Route path="/login" exact element={<Login />} />
-              <Route path="/signup" exact element={<SignUp />} />
-              <Route path="/dashboard" exact element={<Home />} />
-              <Route path="/income" exact element={<Income />} />
-              <Route path="/expense" exact element={<Expense />} />
+              <Route
+                path="/login"
+                exact
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/signup"
+                exact
+                element={
+                  <PublicRoute>
+                    <SignUp />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/dashboard"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/income"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Income />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/expense"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Expense />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </Router>
         </div>
@@ -48,11 +88,31 @@ const App = () => {
 export default App;
 
 const Root = () => {
-  const isAuthenticated = !!localStorage.getItem("token");
+  const { user, loading } = React.useContext(UserContext);
 
-  return isAuthenticated ? (
-    <Navigate to="/dashboard" />
-  ) : (
-    <LandingPage />
-  );
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>; // Replace with a nice spinner component if available
+  }
+
+  return user ? <Navigate to="/dashboard" /> : <LandingPage />;
+};
+
+const ProtectedRoute = ({ children }) => {
+  const { user, loading } = React.useContext(UserContext);
+
+  if (loading) {
+     return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  }
+
+  return user ? children : <Navigate to="/login" />;
+};
+
+const PublicRoute = ({ children }) => {
+  const { user, loading } = React.useContext(UserContext);
+
+  if (loading) {
+     return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  }
+
+  return user ? <Navigate to="/dashboard" /> : children;
 };

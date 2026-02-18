@@ -65,11 +65,12 @@ const SignUp = () => {
       toast.success("Account created! Please log in.");
       navigate("/login");
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (error.response && error.response.data && error.response.data.message) {
         setError(error.response.data.message);
       } else {
-        setError("Something went wrong. Please try again.");
+        setError("Network Error: Please check your internet connection.");
       }
+      console.error("Signup Error:", error);
     } finally {
       setLoading(false);
     }

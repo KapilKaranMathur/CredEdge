@@ -62,9 +62,14 @@ exports.registerUser = async (req, res) => {
     });
   } catch (err) {
     console.error("Register Error:", err);
+    if (err.code === 11000) {
+      return res
+        .status(400)
+        .json({ message: "An account with this email already exists" });
+    }
     res
       .status(500)
-      .json({ message: "Something went wrong. Please try again." });
+      .json({ message: "Server error. Please try again later." });
   }
 };
 
@@ -102,7 +107,7 @@ exports.loginUser = async (req, res) => {
     console.error("Login Error:", err);
     res
       .status(500)
-      .json({ message: "Something went wrong. Please try again." });
+      .json({ message: "Server error. Please check your connection." });
   }
 };
 

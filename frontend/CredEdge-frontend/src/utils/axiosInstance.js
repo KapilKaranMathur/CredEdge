@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
   },
 });
 
-console.log("Current API BASE_URL:", BASE_URL);
+
 axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("token");
@@ -30,11 +30,14 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error.code === "ECONNABORTED") {
-      console.error("Request timeout. Please try again.");
+      console.error("Request timeout. Please check your internet connection.");
     } else if (error.response) {
-      if (error.response.status === 401 && window.location.pathname !== '/login' && window.location.pathname !== '/signup') {
-        localStorage.clear();
-        window.location.href = "/login";
+      if (error.response.status === 401) {
+        const currentPath = window.location.pathname;
+        if (currentPath !== '/login' && currentPath !== '/signup') {
+          localStorage.clear();
+          window.location.href = "/login";
+        }
       } else if (error.response.status === 500) {
         console.error("Server error. Please try again later.");
       }
